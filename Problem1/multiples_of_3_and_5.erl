@@ -1,4 +1,4 @@
--module(problem1).
+-module(multiples_of_3_and_5).
 -include_lib("eunit/include/eunit.hrl").
 -export([sum_multiples_of_3_and_5_below/1]).
 
