@@ -1,14 +1,14 @@
 -module(even_fibonacci_numbers).
 -include_lib("eunit/include/eunit.hrl").
--export([sum_even_fibonacci_numbers_up_to_4000000/0]).
+-export([sum_even_fibonacci_numbers_up_to/1]).
 
-sum_even_fibonacci_numbers_up_to_4000000() ->
-  MyList = generate_fibonacci_numbers_list(0, [], 0),
+sum_even_fibonacci_numbers_up_to(Maximum) ->
+  MyList = generate_fibonacci_numbers_below_maximum(0, [], 0, Maximum),
   EvenNumbers = parse_even_numbers(MyList),
   lists:sum(EvenNumbers).
 
-sum_even_fibonacci_numbers_up_to_4000000_test() ->
-  4613732 = sum_even_fibonacci_numbers_up_to_4000000().
+sum_even_fibonacci_numbers_up_to_test() ->
+  44= sum_even_fibonacci_numbers_up_to(100).
 
 fibonacci_number_index(0) -> 0;
 fibonacci_number_index(1) -> 1;
@@ -18,12 +18,16 @@ fibonacci_number_index(N) ->
 fibonacci_number_index_test() ->
   5 = fibonacci_number_index(5).
 
-generate_fibonacci_numbers_list(Number, List, Increment) when Number > 4000000 ->
-  [X || X <- List, X < 4000000];
-generate_fibonacci_numbers_list(Number, List, Increment) ->
+generate_fibonacci_numbers_below_maximum(Number, List, Increment, Maximum) when Number > Maximum ->
+  [X || X <- List, X < Maximum];
+generate_fibonacci_numbers_below_maximum(Number, List, Increment, Maximum) ->
   NextValue = fibonacci_number_index(Increment),
   NewList = [NextValue|List],
-  generate_fibonacci_numbers_list(NextValue, NewList, Increment + 1).
+  generate_fibonacci_numbers_below_maximum(NextValue, NewList, Increment + 1, Maximum).
+
+generate_fibonacci_numbers_below_maximum_test() ->
+  FirstTen = [89, 55, 34, 21, 13, 8, 5, 3, 2, 1, 1, 0],
+  FirstTen = generate_fibonacci_numbers_below_maximum(0, [], 0, 100).
 
 parse_even_numbers(List) ->
   [X || X <- List, X rem 2 =:= 0].
