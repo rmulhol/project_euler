@@ -11,9 +11,11 @@ factorial_digit_sum(Digit) ->
 factorial_digit_sum_test() ->
   27 = factorial_digit_sum(10).
 
-factorial(0) -> 1;
-factorial(N) when N > 0 ->
-  N * factorial(N - 1).
+factorial(N) -> factorial(N, 1).
+
+factorial(0, Acc) -> Acc;
+factorial(N, Acc) when N > 0 ->
+  factorial(N - 1, N*Acc).
 
 factorial_test() ->
   3628800 = factorial(10).
