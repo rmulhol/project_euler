@@ -1,10 +1,11 @@
-
-
+get_first_ten_digits_of_large_sum :: [Integer]
 get_first_ten_digits_of_large_sum = take 10 (reverse(to_digits(sum(big_integers))))
 
+to_digits :: Integer -> [Integer]
 to_digits 0 = []
 to_digits x = x `rem` 10 : to_digits(x `div` 10)
 
+big_integers :: [Integer]
 big_integers =   
   [37107287533902102798797998220837590246510135740250,
   46376937677490009712648124896970078050417018260538,
